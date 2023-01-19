@@ -1,0 +1,43 @@
+html {
+    font-family: 'Exo2.0', Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.2;
+    color: $app-text-color;
+    height: 100%;
+
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: $app-bg-gradient-shadow, url(@/assets/bg-pattern.png);
+    background-size: auto, 70px 140px;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+*,
+*:before,
+*:after {
+    -webkit-box-sizing: inherit;
+    -moz-box-sizing: inherit;
+    box-sizing: inherit;
+}
+
+#app {
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+}
+
+h1 {
+    font-family: 'Exo2.0';
+    font-size: 36px;
+    line-height: 1.2;
+    text-align: center;
+    text-shadow: $app-heading-text-shadow;
+}
