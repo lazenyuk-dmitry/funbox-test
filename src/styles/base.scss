@@ -1,5 +1,5 @@
 html {
-    font-family: 'Exo2.0', Arial, sans-serif;
+    font-family: $app-base-font-family, Arial, sans-serif;
     font-size: 16px;
     line-height: 1.2;
     color: $app-text-color;
@@ -40,4 +40,16 @@ h1 {
     line-height: 1.2;
     text-align: center;
     text-shadow: $app-heading-text-shadow;
+}
+
+.link {
+    color: $app-link-color;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: pointer;
+    background: none;
+    display: inline-block;
+    padding: 0;
+    border: none;
+    border-bottom: 1px dashed $app-link-color;
 }
