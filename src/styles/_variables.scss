@@ -6,9 +6,16 @@ $app-link-color: #22A7E9;
 $app-heading-text-shadow: 0px 1px 1px #000000;
 
 $card-text-color: #000000;
+$card-disabled-color: #B3B3B3;
 $card-secondary-text-color: #666;
 $card-bubble-label-color: $app-text-color;
 $card-bubble-label-bg-color: #2EA8E6;
+$card-bubble-label-bg-color-active: #D91667;
+$card-bubble-label-bg-color-disabled: $card-disabled-color;
+$card-border-color: #1698D9;
+$card-border-color-active: #D91667;
+$card-border-color-disabled: $card-disabled-color;
+$card-bg-color: #F2F2F2;
 
 $media-hi-res: 1281px;
 $media-smartphone-xl: 480px;

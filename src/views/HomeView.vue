@@ -11,10 +11,10 @@ import AppCard from "@/components/AppCard.vue";
         <AppCard :class="$style.productCard" />
       </div>
       <div :class="$style.cardWrap">
-        <AppCard :class="$style.productCard" />
+        <AppCard :class="$style.productCard" :isActive="true" />
       </div>
       <div :class="$style.cardWrap">
-        <AppCard :class="$style.productCard" />
+        <AppCard :class="$style.productCard" :isDisabled="true" />
       </div>
     </div>
   </main>

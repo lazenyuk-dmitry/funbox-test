@@ -1,5 +1,10 @@
 <template>
-  <svg viewBox="0 0 320 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    viewBox="0 0 320 480"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    :class="{ [$style.active]: isActive, [$style.disabled]: isDisabled }"
+  >
     <defs>
       <!-- Card path area -->
       <path
@@ -14,9 +19,10 @@
 
     <g :clip-path="`url(#${cardClipAreaId})`">
       <!-- Card bg -->
-      <use :href="`#${cardPathId}`" fill="#F2F2F2" />
+      <use :href="`#${cardPathId}`" :class="$style.cardBg" />
 
       <image
+        :class="$style.image"
         href="@/assets/card-item-img.png"
         height="100%"
         width="100%"
@@ -24,18 +30,23 @@
       />
 
       <!-- Card border -->
-      <use
-        :href="`#${cardPathId}`"
-        fill="none"
-        stroke="#1698D9"
-        stroke-width="8px"
-      />
+      <use :href="`#${cardPathId}`" :class="$style.cardBorder" fill="none" />
     </g>
   </svg>
 </template>
 
 <script>
 export default {
+  props: {
+    isActive: {
+      type: Boolean,
+      default: false,
+    },
+    isDisabled: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       cardPathId: null,
@@ -51,4 +62,28 @@ export default {
 };
 </script>
 
-<style lang="scss" module></style>
+<style lang="scss" module>
+.cardBg {
+  fill: $card-bg-color;
+}
+.cardBorder {
+  stroke: $card-border-color;
+  stroke-width: 8px; // Need to specify a double size. For example: 8px/2 = 4px.
+}
+
+// Active styles
+svg.active {
+  .cardBorder {
+    stroke: $card-border-color-active;
+  }
+}
+
+svg.disabled {
+  .cardBorder {
+    stroke: $card-border-color-disabled;
+  }
+  .image {
+    opacity: 0.5;
+  }
+}
+</style>

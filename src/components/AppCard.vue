@@ -3,9 +3,14 @@ import AppCardBg from "@/components/AppCardBg.vue";
 </script>
 
 <template>
-  <div :class="$style.card">
+  <div
+    :class="[
+      $style.card,
+      { [$style.active]: isActive, [$style.disabled]: isDisabled },
+    ]"
+  >
     <div :class="$style.cardMain">
-      <AppCardBg />
+      <AppCardBg :isActive="isActive" :isDisabled="isDisabled" />
 
       <div :class="$style.cardLabelBubble">
         <p :class="$style.cardLabelBubbleText">
@@ -31,6 +36,21 @@ import AppCardBg from "@/components/AppCardBg.vue";
     </p>
   </div>
 </template>
+
+<script>
+export default {
+  props: {
+    isActive: {
+      type: Boolean,
+      default: false,
+    },
+    isDisabled: {
+      type: Boolean,
+      default: false,
+    },
+  },
+};
+</script>
 
 <style lang="scss" module>
 .card {
@@ -125,5 +145,34 @@ import AppCardBg from "@/components/AppCardBg.vue";
 .cardDesc {
   text-align: center;
   margin: 14px 0 0 0;
+}
+
+// Active styles
+.card.active {
+  .cardLabelBubble {
+    background: $card-bubble-label-bg-color-active;
+  }
+}
+
+.card.disabled {
+  .cardMain {
+    cursor: not-allowed;
+    user-select: none;
+  }
+
+  .cardLabelBubble {
+    background: $card-bubble-label-bg-color-disabled;
+  }
+
+  .cardContent {
+    color: $card-disabled-color;
+    opacity: 0.5;
+  }
+
+  .cardMainTitle,
+  .cardMainSubTitle,
+  .cardInfoText {
+    color: $card-disabled-color;
+  }
 }
 </style>
