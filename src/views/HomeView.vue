@@ -7,18 +7,30 @@ import AppCard from "@/components/AppCard.vue";
     <h1>Ты сегодня покормил кота?</h1>
 
     <div :class="$style.productsSection">
-      <div :class="$style.cardWrap">
-        <AppCard :class="$style.productCard" />
-      </div>
-      <div :class="$style.cardWrap">
-        <AppCard :class="$style.productCard" :isActive="true" />
-      </div>
-      <div :class="$style.cardWrap">
-        <AppCard :class="$style.productCard" :isDisabled="true" />
+      <div
+        v-for="(item, index) in getProductsList"
+        :key="item.id"
+        :class="$style.cardWrap"
+      >
+        <AppCard
+          :class="$style.productCard"
+          :data="item"
+          :isDisabled="!item.isAvailable"
+        />
       </div>
     </div>
   </main>
 </template>
+
+<script>
+import { mapGetters } from "vuex";
+
+export default {
+  computed: {
+    ...mapGetters("Products", ["getProductsList"]),
+  },
+};
+</script>
 
 <style lang="scss" module>
 .productsSection {

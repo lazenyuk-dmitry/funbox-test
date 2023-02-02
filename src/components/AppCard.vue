@@ -14,25 +14,31 @@ import AppCardBg from "@/components/AppCardBg.vue";
 
       <div :class="$style.cardLabelBubble">
         <p :class="$style.cardLabelBubbleText">
-          0,5
+          {{ weightValue }}
           <br />
-          <span>кг</span>
+          <span>{{ data.weight.units }}</span>
         </p>
       </div>
 
       <div :class="$style.cardContent">
-        <p :class="$style.cardSupTitle">Сказочное заморское яство</p>
-        <h3 :class="$style.cardMainTitle">Нямушка</h3>
-        <h4 :class="$style.cardMainSubTitle">с фуа-гра</h4>
+        <p :class="$style.cardSupTitle">{{ data.supTitle.default }}</p>
+        <h3 :class="$style.cardMainTitle">{{ data.brand }}</h3>
+        <h4 :class="$style.cardMainSubTitle">{{ data.taste }}</h4>
         <p :class="$style.cardInfoText">
-          10 порций <br />
-          мышь в подарок
+          {{ data.count }} порций <br />
+          {{ data.gift }} <br />
+          {{ data.info }}
         </p>
       </div>
     </div>
     <p :class="$style.cardDesc">
-      Чего сидишь? Порадуй котэ,
-      <button type="button" class="link">купи.</button>
+      <template v-if="isDisabled">
+        Печалька, {{ data.taste }} закончился.
+      </template>
+      <template v-else>
+        {{ data.desc.default }},
+        <button type="button" class="link">купи.</button>
+      </template>
     </p>
   </div>
 </template>
@@ -40,6 +46,10 @@ import AppCardBg from "@/components/AppCardBg.vue";
 <script>
 export default {
   props: {
+    data: {
+      type: Object,
+      required: true,
+    },
     isActive: {
       type: Boolean,
       default: false,
@@ -47,6 +57,11 @@ export default {
     isDisabled: {
       type: Boolean,
       default: false,
+    },
+  },
+  computed: {
+    weightValue() {
+      return this.data.weight.value.toString().replace(/\./g, ",");
     },
   },
 };
@@ -62,6 +77,8 @@ export default {
 .cardMain {
   position: relative;
   color: $card-text-color;
+  cursor: pointer;
+  user-select: none;
 }
 
 .cardLabelBubble {
@@ -157,7 +174,6 @@ export default {
 .card.disabled {
   .cardMain {
     cursor: not-allowed;
-    user-select: none;
   }
 
   .cardLabelBubble {
@@ -173,6 +189,10 @@ export default {
   .cardMainSubTitle,
   .cardInfoText {
     color: $card-disabled-color;
+  }
+
+  .cardDesc {
+    color: $card-desc-text-color-disabled;
   }
 }
 </style>
