@@ -16,6 +16,8 @@ import AppCard from "@/components/AppCard.vue";
           :class="$style.productCard"
           :data="item"
           :isDisabled="!item.isAvailable"
+          :isActive="item.isActive"
+          @activate="setProductActiveStatus($event)"
         />
       </div>
     </div>
@@ -23,11 +25,14 @@ import AppCard from "@/components/AppCard.vue";
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   computed: {
     ...mapGetters("Products", ["getProductsList"]),
+  },
+  methods: {
+    ...mapActions("Products", ["setProductActiveStatus"]),
   },
 };
 </script>

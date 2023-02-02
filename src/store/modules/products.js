@@ -21,6 +21,7 @@ export default {
           units: "кг",
         },
         isAvailable: true,
+        isActive: false,
       },
       {
         id: 2,
@@ -41,6 +42,7 @@ export default {
           units: "кг",
         },
         isAvailable: true,
+        isActive: false,
       },
       {
         id: 3,
@@ -62,12 +64,27 @@ export default {
           units: "кг",
         },
         isAvailable: false,
+        isActive: false,
       },
     ],
   }),
   getters: {
     getProductsList(state) {
       return state.list;
+    },
+  },
+  mutations: {
+    setProductActiveStatus(state, product) {
+      state.list.forEach((item) => {
+        if (item.id === product.id) {
+          item.isActive = product.isActive;
+        }
+      });
+    },
+  },
+  actions: {
+    setProductActiveStatus({ commit }, product) {
+      commit("setProductActiveStatus", product);
     },
   },
 };

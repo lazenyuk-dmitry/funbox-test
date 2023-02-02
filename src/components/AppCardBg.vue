@@ -65,10 +65,17 @@ export default {
 <style lang="scss" module>
 .cardBg {
   fill: $card-bg-color;
+  transition: $card-transition-time;
 }
+
+.image {
+  transition: $card-transition-time;
+}
+
 .cardBorder {
   stroke: $card-border-color;
   stroke-width: 8px; // Need to specify a double size. For example: 8px/2 = 4px.
+  transition: $card-transition-time;
 }
 
 // Active styles

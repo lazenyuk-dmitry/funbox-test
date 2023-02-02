@@ -6,10 +6,19 @@ import AppCardBg from "@/components/AppCardBg.vue";
   <div
     :class="[
       $style.card,
-      { [$style.active]: isActive, [$style.disabled]: isDisabled },
+      {
+        [$style.active]: isActive,
+        [$style.disabled]: isDisabled,
+        [$style.holdActivate]: holdActivate,
+      },
     ]"
   >
-    <div :class="$style.cardMain">
+    <div
+      :class="$style.cardMain"
+      @click="activateCard(true)"
+      @mouseenter="cardMouseEnter"
+      @mouseleave="cardMouseOut"
+    >
       <AppCardBg :isActive="isActive" :isDisabled="isDisabled" />
 
       <div :class="$style.cardLabelBubble">
@@ -21,7 +30,14 @@ import AppCardBg from "@/components/AppCardBg.vue";
       </div>
 
       <div :class="$style.cardContent">
-        <p :class="$style.cardSupTitle">{{ data.supTitle.default }}</p>
+        <p :class="$style.cardSupTitle">
+          <template v-if="!holdActivate && cardHover && isActive">
+            {{ data.supTitle.active }}
+          </template>
+          <template v-else>
+            {{ data.supTitle.default }}
+          </template>
+        </p>
         <h3 :class="$style.cardMainTitle">{{ data.brand }}</h3>
         <h4 :class="$style.cardMainSubTitle">{{ data.taste }}</h4>
         <p :class="$style.cardInfoText">
@@ -35,9 +51,14 @@ import AppCardBg from "@/components/AppCardBg.vue";
       <template v-if="isDisabled">
         Печалька, {{ data.taste }} закончился.
       </template>
+      <template v-else-if="isActive || holdActivate">
+        {{ data.desc.selected }}
+      </template>
       <template v-else>
         {{ data.desc.default }},
-        <button type="button" class="link">купи.</button>
+        <button type="button" class="link" @click="activateCard()">
+          купи.
+        </button>
       </template>
     </p>
   </div>
@@ -45,6 +66,7 @@ import AppCardBg from "@/components/AppCardBg.vue";
 
 <script>
 export default {
+  emits: ["activate"],
   props: {
     data: {
       type: Object,
@@ -59,9 +81,44 @@ export default {
       default: false,
     },
   },
+  data() {
+    return {
+      holdActivate: false,
+      cardHover: false,
+    };
+  },
   computed: {
     weightValue() {
       return this.data.weight.value.toString().replace(/\./g, ",");
+    },
+  },
+  methods: {
+    cardMouseEnter() {
+      this.cardHover = true;
+    },
+    cardMouseOut() {
+      if (this.holdActivate) {
+        this.activateCard();
+        this.holdActivate = false;
+      }
+
+      this.cardHover = false;
+    },
+    activateCard(hold = false) {
+      if (this.isDisabled) {
+        return;
+      }
+
+      if (hold && !this.data.isActive) {
+        this.holdActivate = true;
+
+        return;
+      }
+
+      this.$emit("activate", {
+        ...this.data,
+        isActive: !this.data.isActive,
+      });
     },
   },
 };
@@ -93,6 +150,7 @@ export default {
   text-align: center;
   background: $card-bubble-label-bg-color;
   border-radius: 50%;
+  transition: $card-transition-time;
 }
 
 .cardLabelBubbleText {
@@ -162,12 +220,27 @@ export default {
 .cardDesc {
   text-align: center;
   margin: 14px 0 0 0;
+  line-height: 14px;
 }
 
 // Active styles
 .card.active {
   .cardLabelBubble {
     background: $card-bubble-label-bg-color-active;
+    transition: $card-transition-time;
+  }
+}
+
+.card.active:hover {
+  .cardSupTitle {
+    color: $card-active-text-color;
+  }
+}
+
+.card.active,
+.card.holdActivate {
+  .cardDesc {
+    font-size: 13px;
   }
 }
 
@@ -178,6 +251,7 @@ export default {
 
   .cardLabelBubble {
     background: $card-bubble-label-bg-color-disabled;
+    transition: $card-transition-time;
   }
 
   .cardContent {
