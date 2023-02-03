@@ -8,7 +8,7 @@ import AppCard from "@/components/AppCard.vue";
 
     <div :class="$style.productsSection">
       <div
-        v-for="(item, index) in getProductsList"
+        v-for="item in getProductsList"
         :key="item.id"
         :class="$style.cardWrap"
       >
@@ -17,7 +17,7 @@ import AppCard from "@/components/AppCard.vue";
           :data="item"
           :isDisabled="!item.isAvailable"
           :isActive="item.isActive"
-          @activate="setProductActiveStatus($event)"
+          @changed="setProductActiveStatus($event)"
         />
       </div>
     </div>

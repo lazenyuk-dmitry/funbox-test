@@ -1,5 +1,6 @@
 <script setup>
 import AppCardBg from "@/components/AppCardBg.vue";
+import { nextTick } from "vue";
 </script>
 
 <template>
@@ -15,9 +16,10 @@ import AppCardBg from "@/components/AppCardBg.vue";
   >
     <div
       :class="$style.cardMain"
-      @click="activateCard(true)"
-      @mouseenter="cardMouseEnter"
-      @mouseleave="cardMouseOut"
+      @click.prevent="toggleCard(true)"
+      @touchend.prevent="toggleCard()"
+      @mouseenter="cardMouseEnter()"
+      @mouseleave="cardMouseOut()"
     >
       <AppCardBg :isActive="isActive" :isDisabled="isDisabled" />
 
@@ -56,9 +58,7 @@ import AppCardBg from "@/components/AppCardBg.vue";
       </template>
       <template v-else>
         {{ data.desc.default }},
-        <button type="button" class="link" @click="activateCard()">
-          купи.
-        </button>
+        <button type="button" class="link" @click="toggleCard()">купи.</button>
       </template>
     </p>
   </div>
@@ -66,7 +66,7 @@ import AppCardBg from "@/components/AppCardBg.vue";
 
 <script>
 export default {
-  emits: ["activate"],
+  emits: ["changed"],
   props: {
     data: {
       type: Object,
@@ -98,13 +98,13 @@ export default {
     },
     cardMouseOut() {
       if (this.holdActivate) {
-        this.activateCard();
+        this.toggleCard();
         this.holdActivate = false;
       }
 
       this.cardHover = false;
     },
-    activateCard(hold = false) {
+    toggleCard(hold = false) {
       if (this.isDisabled) {
         return;
       }
@@ -115,7 +115,7 @@ export default {
         return;
       }
 
-      this.$emit("activate", {
+      this.$emit("changed", {
         ...this.data,
         isActive: !this.data.isActive,
       });
@@ -220,7 +220,7 @@ export default {
 .cardDesc {
   text-align: center;
   margin: 14px 0 0 0;
-  line-height: 14px;
+  min-height: 20px;
 }
 
 // Active styles
