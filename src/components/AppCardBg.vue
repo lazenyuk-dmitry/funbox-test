@@ -23,7 +23,7 @@
 
       <image
         :class="$style.image"
-        href="@/assets/card-item-img.png"
+        :href="imgUrl"
         height="100%"
         width="100%"
         preserveAspectRatio="xMinYMax meet"
@@ -38,6 +38,10 @@
 <script>
 export default {
   props: {
+    imgUrl: {
+      type: String,
+      required: true,
+    },
     isActive: {
       type: Boolean,
       default: false,

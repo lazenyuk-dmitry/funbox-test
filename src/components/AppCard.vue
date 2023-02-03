@@ -1,6 +1,5 @@
 <script setup>
 import AppCardBg from "@/components/AppCardBg.vue";
-import { nextTick } from "vue";
 </script>
 
 <template>
@@ -21,7 +20,11 @@ import { nextTick } from "vue";
       @mouseenter="cardMouseEnter()"
       @mouseleave="cardMouseOut()"
     >
-      <AppCardBg :isActive="isActive" :isDisabled="isDisabled" />
+      <AppCardBg
+        :imgUrl="data.image"
+        :isActive="isActive"
+        :isDisabled="isDisabled"
+      />
 
       <div :class="$style.cardLabelBubble">
         <p :class="$style.cardLabelBubbleText">

@@ -16,6 +16,7 @@ export default {
           default: "Чего сидишь? Порадуй котэ",
           selected: "Печень утки разварная с артишоками.",
         },
+        image: new URL("@/assets/card-item-img.png", import.meta.url).href,
         weight: {
           value: 0.5,
           units: "кг",
@@ -37,6 +38,7 @@ export default {
           default: "Чего сидишь? Порадуй котэ",
           selected: "Головы щучьи с чесноком да свежайшая сёмгушка.",
         },
+        image: new URL("@/assets/card-item-img.png", import.meta.url).href,
         weight: {
           value: 2,
           units: "кг",
@@ -59,6 +61,7 @@ export default {
           default: "Чего сидишь? Порадуй котэ",
           selected: "Филе из цыплят с трюфелями в бульоне.",
         },
+        image: new URL("@/assets/card-item-img.png", import.meta.url).href,
         weight: {
           value: 5,
           units: "кг",
