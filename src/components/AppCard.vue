@@ -15,8 +15,8 @@ import AppCardBg from "@/components/AppCardBg.vue";
   >
     <div
       :class="$style.cardMain"
-      @click.prevent="toggleCard(true)"
-      @touchend.prevent="toggleCard()"
+      @click="toggleCard(true)"
+      @touchend="cardTouch($event)"
       @mouseenter="cardMouseEnter()"
       @mouseleave="cardMouseOut()"
     >
@@ -88,6 +88,7 @@ export default {
     return {
       holdActivate: false,
       cardHover: false,
+      cardTouchCanceled: false,
     };
   },
   computed: {
@@ -96,6 +97,14 @@ export default {
     },
   },
   methods: {
+    cardTouch(event) {
+      if (event.cancelable) {
+        this.toggleCard();
+        event.preventDefault();
+
+        return;
+      }
+    },
     cardMouseEnter() {
       this.cardHover = true;
     },
